@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:vm="clr-namespace:ListaZakupowWaszkiewicz.ViewModels"
+             xmlns:views="clr-namespace:ListaZakupowWaszkiewicz.Views"
+             x:Class="ListaZakupowWaszkiewicz.Views.MainPage">
+
+    <ContentPage.BindingContext>
+        <vm:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="10">
+
+            <Picker Title="Wybierz sklep"
+                ItemsSource="{Binding Stores}"
+                SelectedItem="{Binding SelectedStore}" />
+
+            <Label Text="Dodaj kategoriê:" FontAttributes="Bold"/>
+            <HorizontalStackLayout>
+                <Entry Placeholder="Nazwa kategorii" Text="{Binding NewCategoryName}" />
+                <Button Text="Dodaj" Command="{Binding AddCategoryCommand}" />
+            </HorizontalStackLayout>
+
+            <Label Text="Dodaj produkt:" FontAttributes="Bold"/>
+            <Entry Placeholder="Nazwa produktu" Text="{Binding NewProductName}" />
+            <Entry Placeholder="Jednostka (szt, kg...)" Text="{Binding NewProductUnit}" />
+            <Entry Placeholder="Iloœæ" Text="{Binding NewProductQuantity}" Keyboard="Numeric" />
+            <Picker Title="Sklep" ItemsSource="{Binding Stores}" SelectedItem="{Binding NewProductStore}" />
+            <Picker Title="Kategoria" ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedCategoryForProduct}" />
+            <HorizontalStackLayout>
+                <Label Text="Opcjonalny?" VerticalOptions="Center"/>
+                <Switch IsToggled="{Binding NewProductIsOptional}" />
+            </HorizontalStackLayout>
+            <Button Text="Dodaj produkt" Command="{Binding AddProductCommand}" />
+
+            <CollectionView ItemsSource="{Binding FilteredCategories}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="20"/>
+                            <CollectionView ItemsSource="{Binding Products}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <views:ProductItemView BindingContext="{Binding}" />
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

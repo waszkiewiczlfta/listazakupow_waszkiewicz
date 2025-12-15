@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:vm="clr-namespace:ListaZakupowWaszkiewicz.ViewModels"
+             x:Class="ListaZakupowWaszkiewicz.Views.ProductItemView">
+
+    <Frame Padding="10" BorderColor="Gray" Margin="2">
+        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+
+            <CheckBox IsChecked="{Binding Product.IsBought}" />
+
+            <Label Text="{Binding Product.Name}" />
+
+            <HorizontalStackLayout>
+                <Button Text="-" Command="{Binding QuantityMinusCommand}" />
+                <Entry Text="{Binding Product.Quantity}" WidthRequest="40" Keyboard="Numeric"/>
+                <Button Text="+" Command="{Binding QuantityPlusCommand}" />
+            </HorizontalStackLayout>
+
+            <Label Text="{Binding Product.Store}" FontAttributes="Bold" TextColor="DarkGreen"/>
+            <Label Text="(opc.)" IsVisible="{Binding Product.IsOptional}" TextColor="OrangeRed"/>
+
+            <Button Text="X" TextColor="Red" Command="{Binding DeleteCommand}" />
+
+        </HorizontalStackLayout>
+    </Frame>
+</ContentView>
